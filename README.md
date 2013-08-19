@@ -5,8 +5,8 @@ Reads in the Geolite database (CSV Format not binary) and detects if a given IP 
 
 For more information on the Geolite database see:
 
-[Home Page](http://dev.maxmind.com/geoip/legacy/geolite/)
-[Direct download link](http://geolite.maxmind.com/download/geoip/database/GeoIPCountryCSV.zip)
+* [Home Page](http://dev.maxmind.com/geoip/legacy/geolite/)
+* [Direct download link](http://geolite.maxmind.com/download/geoip/database/GeoIPCountryCSV.zip)
 
 Usage
 -----
@@ -17,19 +17,21 @@ database):
 
  1. `grep "Australia" GeoIPCountryWhois.csv >> ranges.csv`
  2. Copy `ranges.csv` and `ip-detect.php` to your website
- 3. Use the following code at the top of your website files (or within your source code as needed):
- ```php
-<?php
+ 3. Use the following code at the top of your website files (or within your source code as needed): 
+
+```php
 
 require_once(dirname(__FILE__) . '/ip-detect.php');
 
-// Redirect the visitor if they're in ranges.csv - i.e. the Australian IP Address ranges
+// Redirect the visitor if their IP is in ranges.csv
+// i.e. Redirect the visitor if their IP is recognised as Australian
 if (isInIpRanges($_SERVER['REMOTE_ADDR']))
 {
     header('Location: http://www.example.org/australian-site');
 }
 
-// Rest of website code```
+// Rest of website code
+```
 
 Running Tests
 -------------
