@@ -11,22 +11,7 @@ function isInIpRanges($ipAddress, $databaseFilepath = null)
     {
         $databaseFilepath = dirname(__FILE__) . '/ranges.csv';
     }
-
-    $ipAddressRanges = getIpRanges($databaseFilepath);
-    foreach ($ipAddressRanges as $ipAddressRange)
-    {
-        if ($ipAddressRange->contains($ipAddress))
-        {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-function getIpRanges($csvFilepath)
-{
-    $handle = fopen($csvFilepath, 'r');
+    $handle = fopen($databaseFilepath, 'r');
     if ($handle === false)
     {
         throw new RuntimeException(sprintf(
@@ -35,14 +20,18 @@ function getIpRanges($csvFilepath)
         ));
     }
 
-    $ranges = array();
     while (($rowData = fgetcsv($handle, 1000, ',')) !== false)
     {
-        $ranges[] = new IpAddressRange($rowData[0], $rowData[1]);
+        $range = new IpAddressRange($rowData[0], $rowData[1]);
+        if ($range->contains($ipAddress))
+        {
+        	fclose($handle);
+        	return true;
+        }
     }
-    fclose($handle);
 
-    return $ranges;
+    fclose($handle);
+    return false;
 }
 
 function isValidIpAddress($ipAddress)
