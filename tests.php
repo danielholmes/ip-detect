@@ -6,6 +6,8 @@ $testRangesFilepath = dirname(__FILE__) . '/test-ranges.csv';
 
 assertTrue(isValidIpAddress('127.0.0.1'));
 assertFalse(isValidIpAddress('0.0.0.256'));
+assertFalse(isInIpRanges('Invalid IP', $testRangesFilepath));
+assertFalse(isInIpRanges(123455566, $testRangesFilepath));
 assertTrue(isInIpRanges('1.0.127.254', $testRangesFilepath));
 assertTrue(isInIpRanges('1.0.127.255', $testRangesFilepath));
 assertFalse(isInIpRanges('1.0.128.255', $testRangesFilepath));
